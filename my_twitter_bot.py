@@ -17,7 +17,7 @@ api = tweepy.API(auth,wait_on_rate_limit=True) # https://stackoverflow.com/quest
 
 # #kubernetes OR #cncf OR #prometheus OR #portainer OR #gitlab OR #k3s OR #python OR #golang 
 
-for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #prometheus OR #gitlab OR #k3s OR portainer'), lang='en').items(400):
+for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s'), lang='en').items(400):
     try:
         # Add \n escape character to print() to organize tweets
         print('\nTweet by: @' + tweet.user.screen_name)
