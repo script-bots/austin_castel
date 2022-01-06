@@ -1,6 +1,13 @@
 import tweepy
 from time import sleep
-from tokens import * # tokens.py is a file that contains the Twitter API keys
+import os #for secrets
+
+
+
+CONSUMER_KEY = os.environ['CONSUMER_KEY']
+CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
+ACCESS_KEY = os.environ['ACCESS_KEY']
+ACCESS_SECRET = os.environ['ACCESS_SECRET']
 
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
