@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
 
       - name: checkout repo content
@@ -27,4 +27,3 @@ jobs:
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           ACCESS_SECRET: ${{ secrets.ACCESS_SECRET }}
         run: python remove_tweeets.py
-          
