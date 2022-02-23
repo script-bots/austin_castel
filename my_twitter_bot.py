@@ -23,15 +23,15 @@ for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3
         identity = tweet.id
         status = api.get_status(identity)
         logger.debug((status.text))
-        logger.debug(status.id)
+#         logger.debug(status.id)
         tagss = status.entities["hashtags"]
-        logger.warning(type(tagss))
+#         logger.warning(type(tagss))
         counter = len(tagss)
-        logger.exception(counter)
-        for tags in tagss:
-            logger.critical((tags["text"]))
-        name = status.user.screen_name
-        temp_name = 'hrittikhere'
+#         logger.exception(counter)
+#         for tags in tagss:
+#             logger.critical((tags["text"]))
+#         name = status.user.screen_name
+#         temp_name = 'hrittikhere'
 
         # if counter<=3 and name==temp_name:
 
@@ -39,7 +39,7 @@ for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3
             tweet.retweet()
             logger.success("Posted")
         else:
-            logger.critical("Too many hashtags")
+            logger.critical("Not Posted")
 
         # print('\nTweet by: @' + tweet.user.screen_name)
         # sleep(5)
