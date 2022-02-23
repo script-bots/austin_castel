@@ -18,7 +18,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 # #kubernetes OR #cncf OR #prometheus OR #portainer OR #gitlab OR #k3s OR #python OR #golang
 
-for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(1000):
+for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(400):
     try:
         identity = tweet.id
         status = api.get_status(identity)
