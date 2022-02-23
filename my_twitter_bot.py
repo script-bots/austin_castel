@@ -1,6 +1,7 @@
 import os #for secrets
 import tweepy
 from time import sleep
+from loguru import logger
 
 
 CONSUMER_KEY = os.environ['CONSUMER_KEY']
@@ -17,16 +18,25 @@ api = tweepy.API(auth,wait_on_rate_limit=True) # https://stackoverflow.com/quest
 
 # #kubernetes OR #cncf OR #prometheus OR #portainer OR #gitlab OR #k3s OR #python OR #golang 
 
-for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(400):
+for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(10):
     try:
-        # Add \n escape character to print() to organize tweets
-        print('\nTweet by: @' + tweet.user.screen_name)
+        
+        identity=tweet.id
+        status = api.get_status(identity)
+        logger.debug((status.text))
+        tagss=status.entities["hashtags"]
+        logger.warning((tagss))
+        for tags in tagss:
+            logger.info((tags["text"]))
+
+
+        # print('\nTweet by: @' + tweet.user.screen_name)
 
         # Retweet tweets as they are found
-        tweet.retweet()
-        print('Retweeted the tweet')
+        # tweet.retweet()
+        # print('Retweeted the tweet')
 
-        sleep(5)
+        # sleep(5)
 
     except tweepy.TweepError as e:
         print(e.reason)
