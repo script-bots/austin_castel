@@ -1,4 +1,4 @@
-import os #for secrets
+import os
 import tweepy
 from time import sleep
 from loguru import logger
@@ -10,32 +10,38 @@ ACCESS_KEY = os.environ['ACCESS_KEY']
 ACCESS_SECRET = os.environ['ACCESS_SECRET']
 
 
-
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-api = tweepy.API(auth,wait_on_rate_limit=True) # https://stackoverflow.com/questions/41786569/twitter-error-code-429-with-tweepy
-#https://stackoverflow.com/questions/58844898/how-to-follow-someone-on-twitter-using-tweepy-python
+# https://stackoverflow.com/questions/41786569/twitter-error-code-429-with-tweepy
+api = tweepy.API(auth, wait_on_rate_limit=True)
+# https://stackoverflow.com/questions/58844898/how-to-follow-someone-on-twitter-using-tweepy-python
 
-# #kubernetes OR #cncf OR #prometheus OR #portainer OR #gitlab OR #k3s OR #python OR #golang 
+# #kubernetes OR #cncf OR #prometheus OR #portainer OR #gitlab OR #k3s OR #python OR #golang
 
-for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(10):
+for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(1000):
     try:
-        
-        identity=tweet.id
+        identity = tweet.id
         status = api.get_status(identity)
         logger.debug((status.text))
-        tagss=status.entities["hashtags"]
-        logger.warning((tagss))
+        logger.debug(status.id)
+        tagss = status.entities["hashtags"]
+        logger.warning(type(tagss))
+        counter = len(tagss)
+        logger.exception(counter)
         for tags in tagss:
-            logger.info((tags["text"]))
+            logger.critical((tags["text"]))
+        name = status.user.screen_name
+        temp_name = 'hrittikhere'
 
+        # if counter<=3 and name==temp_name:
+
+        if counter <= 3:
+            tweet.retweet()
+            logger.success("Posted")
+        else:
+            logger.critical("Too many hashtags")
 
         # print('\nTweet by: @' + tweet.user.screen_name)
-
-        # Retweet tweets as they are found
-        # tweet.retweet()
-        # print('Retweeted the tweet')
-
         # sleep(5)
 
     except tweepy.TweepError as e:
