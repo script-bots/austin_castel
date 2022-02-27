@@ -21,8 +21,8 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3s OR #portainer'), lang='en').items(400):
     try:
         identity = tweet.id
-        status = api.get_status(identity)
-        logger.debug((status.text))
+        status = api.get_status(identity, tweet_mode = "extended")
+        logger.debug((status.full_text))
 #         logger.debug(status.id)
         tagss = status.entities["hashtags"]
 #         logger.warning(type(tagss))
@@ -37,7 +37,7 @@ for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3
 
         if counter <= 3:
 
-            tweet.retweet()
+            # tweet.retweet()
             logger.critical(link)
             logger.debug("POSTED 🔝")
         else:
