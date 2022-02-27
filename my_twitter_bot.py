@@ -37,7 +37,7 @@ for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3
 
         if counter <= 3:
 
-            # tweet.retweet()
+            tweet.retweet()
             logger.critical(link)
             logger.debug("POSTED 🔝")
         else:
