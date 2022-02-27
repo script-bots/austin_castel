@@ -27,19 +27,22 @@ for tweet in tweepy.Cursor(api.search, q=('kubernetes OR #cncf OR #gitlab OR #k3
         tagss = status.entities["hashtags"]
 #         logger.warning(type(tagss))
         counter = len(tagss)
-#         logger.exception(counter)
-#         for tags in tagss:
-#             logger.critical((tags["text"]))
+        logger.debug(counter)
+        for tags in tagss:
+            logger.debug((tags["text"]))
 #         name = status.user.screen_name
 #         temp_name = 'hrittikhere'
-
+        link="https://twitter.com/hrittikhere/status/"+str(identity)
         # if counter<=3 and name==temp_name:
 
         if counter <= 3:
+
             tweet.retweet()
-            logger.success("Posted")
+            logger.critical(link)
+            logger.debug("POSTED 🔝")
         else:
-            logger.critical("Not Posted")
+            logger.critical(link)
+            logger.critical("Not Posted  🔝")
 
         # print('\nTweet by: @' + tweet.user.screen_name)
         # sleep(5)
